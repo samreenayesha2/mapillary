@@ -1,0 +1,115 @@
+camera: ^0.7.0+2
+  path_provider: ^1.6.27
+  path: ^1.7.0
+
+  image_picker: ^0.6.7+22
+
+
+  build. grade:
+
+
+
+  ext{
+    buildToolVersion = "29.0.2"
+    mindSdkVersion= 21
+    compileSdkVersion=29
+    targetSdkVersion=29}
+
+    ______________________________
+
+    camera::::
+
+
+    import 'dart:io';
+
+import 'package:flutter/material.dart';
+
+import 'package:image_picker/image_picker.dart';
+
+void main(List<String> args) {}
+
+class Camera extends StatefulWidget {
+  final String title;
+
+  const Camera({Key key, this.title}) : super(key: key);
+  @override
+  _CameraState createState() => _CameraState();
+}
+
+class _CameraState extends State<Camera> {
+  File _image;
+
+  Future getImage() {
+    final image = ImagePicker.getImage(source: ImageSource.camera);
+
+    setState(() {
+      _image = image as File;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Camera'),
+      ),
+      body: Center(
+          child: _image == null
+              ? Text("Image is not loaded")
+              : Image.file(_image)),
+      floatingActionButton: FloatingActionButton(
+        onPressed: getImage,
+        tooltip: 'Increment',
+        child: Icon(Icons.camera_alt),
+      ),
+    );
+  }
+}
+
+capture image in single click::
+
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'dart:async';
+
+void main(List<String> args) {}
+
+class Camera extends StatefulWidget {
+  @override
+  _CameraState createState() => _CameraState();
+}
+
+class _CameraState extends State<Camera> {
+  File _image;
+
+  Future getImage() async {
+    // ignore: deprecated_member_use
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+    setState(() {
+      _image = image;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new MaterialApp(
+      title: 'Camera',
+      home: new Scaffold(
+        appBar: new AppBar(
+          title: new Text('Camera'),
+        ),
+        body: new Center(
+          child: _image == null
+              ? new Text('No image selected')
+              : new Image.file(_image),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: getImage,
+          tooltip: 'Pick Image',
+          child: Icon(Icons.camera),
+        ),
+      ),
+    );
+  }
+}
